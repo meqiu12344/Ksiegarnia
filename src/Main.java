@@ -25,9 +25,13 @@ public class Main {
         }
 
         if(wyb == 3){
-            System.out.println("DZIAL 3");
+            ksiazka.findTitle();
         }
 
-        ksiazka.wys();
+        if(wyb == 4){
+            ksiazka.findAutor();
+        }
+
+        //ksiazka.wys();
     }
 }

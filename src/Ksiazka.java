@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
@@ -64,8 +65,8 @@ public class Ksiazka {
 
     public static void create(){
         allKsiazki.add(new Ksiazka("Kot w butach" , "miłosna" , 20.0 , new Autor("Adam" , "Karczewski")));
-        allKsiazki.add(new Ksiazka("Kot w butach2" , "cos" , 26.0 , new Autor("Artur" , "Wierciński")));
-        allKsiazki.add(new Ksiazka("Tomek sojer" , "TEST" , 56.0 , new Autor("Kacper" , "CHUJ")));
+        allKsiazki.add(new Ksiazka("Kot w butach 2" , "cos" , 26.0 , new Autor("Artur" , "Wierciński")));
+        allKsiazki.add(new Ksiazka("Tomek sojer" , "TEST" , 56.0 , new Autor("Kacper" , "Markowski")));
     }
 
     public static void add(){
@@ -112,7 +113,7 @@ public class Ksiazka {
         System.out.print("Imię autora: ");
         String imie = scanner.next();
 
-        int i=0;
+        int i=0 , ifDel = 0;
         for(Ksiazka k: allKsiazki){
             if(k.getTitle().toUpperCase(Locale.ROOT).equals(title.toUpperCase())){
                 if(k.getAutor().getImie().equals(imie)){
@@ -121,13 +122,74 @@ public class Ksiazka {
                 }
             }
             i++;
+            ifDel++;
         }
 
-        System.out.println("Nie ma takiej książki lub imię autora zostało błędnie wpisane");
+
+        if(ifDel == 0) {
+            System.out.println("Nie ma takiej książki lub imię niggera zostało błędnie wpisane");
+        }
+
+    }
+
+    public static void findTitle(){
+        System.out.print("Podaj tytuł ksiązki: ");
+        String title = "";
+        while (title.isEmpty()){
+            title = scanner.nextLine();
+        }
+
+        int ifFind = 0;
+        for(Ksiazka find: allKsiazki){
+            if(find.getTitle().toUpperCase().equals(title.toUpperCase())){
+                System.out.println("=========================================");
+                System.out.println("Tytuł: " + find.getTitle());
+                System.out.println("Gatunek: " + find.getType());
+                System.out.println("Autor: " + find.autor.getImie() + " " + find.autor.getNazwisko());
+                ifFind++;
+            }
+        }
+
+        if(ifFind == 0){
+            System.out.println("Nie posiadamy takiej ksiazki w naszej bibliotece");
+        }
+    }
+
+    public static void findAutor(){
+        System.out.print("Podaj imię autora: ");
+        String name = "";
+        while (name.isEmpty()){
+            name = scanner.nextLine();
+        }
+
+        System.out.print("Podaj nazwisko autora: ");
+        String nazwisko = "";
+        while (nazwisko.isEmpty()){
+            nazwisko = scanner.nextLine();
+        }
+
+
+        int blad = 0;
+
+        for(Ksiazka find: allKsiazki){
+            if (find.getAutor().getImie().equalsIgnoreCase(name) && find.autor.getNazwisko().equalsIgnoreCase(nazwisko)){
+                System.out.println("=========================================");
+                System.out.println("Tytuł: " + find.getTitle());
+                System.out.println("Gatunek: " + find.getType());
+                System.out.println("Autor: " + find.autor.getImie() + " " + find.autor.getNazwisko());
+                blad++;
+            }
+        }
+
+        if(blad == 0){
+            System.out.println("Nie ma takiego autora");
+        }
 
     }
 
     public static void wys(){
+        System.out.println();
+        System.out.println("--------------");
         for(Ksiazka x: allKsiazki){
             System.out.println(x.toString());
         }
